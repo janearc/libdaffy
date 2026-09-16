@@ -254,7 +254,9 @@ func TestExports(t *testing.T) {
 	if !regexp.MustCompile(`"#[0-9a-f]{6}"`).Match(out) {
 		t.Error("layout colours as hex")
 	}
-	out, _ = d.Layout()
+	if _, err := d.Layout(); err != nil {
+		t.Fatalf("layout again: %v", err)
+	}
 	if os.Getenv("DAFFY_DUMP") != "" {
 		os.WriteFile("dump.ansi", []byte(ansi), 0o644)
 	}
